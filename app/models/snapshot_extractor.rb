@@ -1,0 +1,2 @@
+class SnapshotExtractor < ApplicationRecord
+end
