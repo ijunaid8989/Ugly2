@@ -1,6 +1,4 @@
 class SnapshotExtractor < ApplicationRecord
-  require "SnapExtractor"
-
   def self.start
     current_status = SnapshotExtractor.if_its_running
 
@@ -22,7 +20,7 @@ class SnapshotExtractor < ApplicationRecord
     when nil
       extractor = SnapshotExtractor.fetch_details
       logger.info "Put Logger Info"
-      test(6)
+      SnapExtractor.fix_me(6)
       puts extractor
       logger.info "Starting Job"
       #TODO start the job now

@@ -1,5 +1,5 @@
 module SnapExtractor
-  def test(n)
+  def self.fix_me(n)
     puts "I am a test from SnapExtractor Module #{n}"
   end
 end
