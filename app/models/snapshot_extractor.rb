@@ -19,11 +19,8 @@ class SnapshotExtractor < ApplicationRecord
     case args
     when nil
       extractor = SnapshotExtractor.fetch_details
-      logger.info "Put Logger Info"
-      SnapExtractor.fix_me(6)
-      puts extractor
       logger.info "Starting Job"
-      #TODO start the job now
+      SnapExtractor.extract(extractor)
     else
       logger.info "Job is already running"
     end
