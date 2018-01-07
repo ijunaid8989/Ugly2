@@ -33,7 +33,7 @@ module SnapExtractor
     end
   end
 
-  def.self humanize_interval(interval)
+  def self.humanize_interval(interval)
     case interval
     when 60
       "1 Frame Every 1 min"
@@ -62,7 +62,7 @@ module SnapExtractor
     end
   end
 
-  def.self round(days)
+  def self.round(days)
     case days
     when 0
       2
@@ -77,6 +77,36 @@ module SnapExtractor
       1
     else
       interval
+    end
+  end
+
+  def self.request_from_seaweedfs(url, type, attribute)
+    request = get(url)
+    case
+    when request.status == 200 && request.reason_phrase == "OK"
+      data = JSON.parse(request.body)
+      case data[type].kind_of? Array
+      when true
+        data[type].map { |e| e[attribute] }
+      else
+        []
+      end
+    else
+      []
+    end
+  end
+
+  def self.get(url)
+    conn(url).get do |request|
+      request.headers['Accept'] = 'application/json'
+      request.options.timeout = 15000
+    end
+  end
+
+  def self.conn(url)
+    Faraday.new(:url => url) do |c|
+      c.use Faraday::Response::Logger     # log request & response to STDOUT
+      c.use Faraday::Adapter::NetHttp     # perform requests with Net::HTTP
     end
   end
 end
