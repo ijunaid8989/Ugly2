@@ -82,18 +82,11 @@ module SnapExtractor
 
   def self.request_from_seaweedfs(url, type, attribute)
     request = get(url)
-    case
-    when request.status == 200 && request.reason_phrase == "OK"
+    if request.status == 200 && request.reason_phrase == "OK"
       data = JSON.parse(request.body)
-      case data[type].kind_of? Array
-      when true
-        data[type].map { |e| e[attribute] }
-      else
-        []
-      end
-    else
-      []
+      return data[type].map { |e| e[attribute] } if data[type].kind_of? Array
     end
+    []
   end
 
   def self.get(url)
