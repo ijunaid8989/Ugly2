@@ -29,7 +29,6 @@ module SnapExtractor
       e_schedule = schedule
       e_interval = humanize_interval(interval)
 
-      binding.pry
     end
   end
 
@@ -63,21 +62,11 @@ module SnapExtractor
   end
 
   def self.round(days)
-    case days
-    when 0
-      2
-    else
-      days + 1
-    end
+    return days == 0 ? 2 : days + 1
   end
 
   def self.intervaling(interval)
-    case interval
-    when interval <= 0
-      1
-    else
-      interval
-    end
+    return interval <= 0 ? 1 : interval
   end
 
   def self.request_from_seaweedfs(url, type, attribute)
